@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+ <header class="bg-dark py-5">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="text-center text-white">
+            <h1 class="display-4 fw-bolder">Shopping Cart</h1>
+            <p class="lead fw-normal text-white-50 mb-0">View Your Cart...</p>
+        </div>
+    </div>
+</header>
+<div class="container">
+    {% if cart_products %}
+    {% for product in cart_products %}
+        <div class="card mb-3" style="min-height: 75vh;">
+          <div class="row g-0">
+            <div class="col-md-4">
+              <img src="{{ product.image.url }}" class="img-fluid rounded-start" alt="...">
+            </div>
+            <div class="col-md-8">
+              <div class="card-body">
+                   <h4 class="card-title">{{ product.name }}</h4>
+                    <h5 class="card-text">{{ product.sub_title }}</h5>
+                    <p class="card-text">{{ product.description }}</p>
+                    <h6 class="card-text">
+                    {% if product.is_sale %}
+                        {{ product.sale_price }} LKR
+                    {% else %}
+                        {{ product.price }} LKR
+                    {% endif %}
+                    </h6>
+                    <div class="row justtify-content-center">
+                    <div class="col-md-2">Quantity</div>
+                        <div class="col-md-2">
+                            <select class="form-select" id="qty-cart">
+                              <option selected>
+                                {% for key, value in quantities.items %} 
+                                    {% if key == product.id|slugify %}
+                                        {{ value }}
+                                    {% endif %}
+                                {% endfor %} 
+
+                              </option>
+                              <option value="2">2</option>
+                              <option value="3">3</option>
+                              <option value="4">4</option>
+                            </select>
+                        </div>
+                    </div>
+              </div>
+            </div>
+          </div>
+    </div>
+    {% endfor %}
+
+    {% else %}
+            <h6>Your cart is empty....</h6>
+    {% endif %}
+</div>
+        
+{% endblock %}
