@@ -33,7 +33,7 @@
                     <div class="row justtify-content-center">
                     <div class="col-md-2">Quantity</div>
                         <div class="col-md-2">
-                            <select class="form-select" id="qty-cart">
+                            <select class="form-select" id="select{{product.id}}">
                               <option selected>
                                 {% for key, value in quantities.items %} 
                                     {% if key == product.id|slugify %}
@@ -42,12 +42,14 @@
                                 {% endfor %} 
 
                               </option>
+                              <option value="1">1</option>
                               <option value="2">2</option>
                               <option value="3">3</option>
                               <option value="4">4</option>
                             </select>
                         </div>
                     </div>
+                    <button type="button" data-index="{{ product.id }}" class="btn btn-secondary update-cart">Update</button>
               </div>
             </div>
           </div>
@@ -58,5 +60,33 @@
             <h6>Your cart is empty....</h6>
     {% endif %}
 </div>
+
+<script>
+    
+    $(document).on('click', '.update-cart', function(e){
+        e.preventDefault();
+
+        //grabing the product id
+        var productid = $(this).data('index');
+
+        $.ajax({
+            type: 'POST',
+            url: '{% url 'cart_update' %}',
+            data: {
+                product_id: $(this).data('index'),
+                product_qty: $('#select' + productid + 'option:selected').text(),
+                csrfmiddlewaretoken: '{{ csrf_token }}',
+                action: 'post'
+            },
+            success: function(json){
+                //console.log(json);
+                location.reload();
+            },
+            error: function(xhr, errmsg, err) {
+            }
+        });
+    });
+
+</script>
         
 {% endblock %}
