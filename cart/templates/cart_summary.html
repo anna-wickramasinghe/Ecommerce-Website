@@ -50,19 +50,24 @@
                         </div>
                     </div>
                     <button type="button" data-index="{{ product.id }}" class="btn btn-secondary update-cart">Update</button>
+                    <button type="button" data-index="{{ product.id }}" class="btn btn-danger delete-product">Remove</button>
               </div>
             </div>
           </div>
     </div>
     {% endfor %}
 
+    <h3>Total: {{ totals }} LKR</h3>
+
     {% else %}
             <h6>Your cart is empty....</h6>
     {% endif %}
+
+
 </div>
 
 <script>
-    
+    // update cart
     $(document).on('click', '.update-cart', function(e){
         e.preventDefault();
 
@@ -74,12 +79,35 @@
             url: '{% url 'cart_update' %}',
             data: {
                 product_id: $(this).data('index'),
-                product_qty: $('#select' + productid + 'option:selected').text(),
+                product_qty: $('#select' + productid + ' option:selected').text(),
                 csrfmiddlewaretoken: '{{ csrf_token }}',
                 action: 'post'
             },
             success: function(json){
-                //console.log(json);
+                location.reload();
+            },
+            error: function(xhr, errmsg, err) {
+            }
+        });
+    });
+
+
+    //delete cart
+    $(document).on('click', '.delete-product', function(e){
+        e.preventDefault();
+
+        //grabing the product id
+        //var productid = $(this).data('index');
+
+        $.ajax({
+            type: 'POST',
+            url: '{% url 'cart_delete' %}',
+            data: {
+                product_id: $(this).data('index'),
+                csrfmiddlewaretoken: '{{ csrf_token }}',
+                action: 'post'
+            },
+            success: function(json){
                 location.reload();
             },
             error: function(xhr, errmsg, err) {
