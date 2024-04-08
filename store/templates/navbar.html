@@ -10,6 +10,7 @@
                         {% if user.is_authenticated %}
                             <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Logout</a></li>
                             <li class="nav-item"><a class="nav-link" href="{% url 'update_user' %}">Profile</a></li>
+                            
                         {% else %}
                             <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Login</a></li>
                             <li class="nav-item"><a class="nav-link" href="{% url 'register' %}">Register</a></li>
@@ -24,6 +25,9 @@
                                 <li><a class="dropdown-item" href="{% url 'all_categories' %}">See All Categories</a></li>
                             </ul>
                         </li>
+                    </ul>
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                        <li class="nav-item"><a class="nav-link" href="{% url 'search' %}">🔎Search</a></li>
                     </ul>
                     <form class="d-flex">
                         <a href="{% url 'cart_summary' %}" class="btn btn-outline-dark">

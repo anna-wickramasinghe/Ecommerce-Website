@@ -1,8 +1,11 @@
-from store.models import Product
+from store.models import Product, Profile
 
 class Cart:
 	def __init__(self, request):
 		self.session = request.session
+
+		#get request
+		self.request = request
 
 		cart = self.session.get('session_key')
 		if 'session_key' not in request.session:
@@ -11,6 +14,32 @@ class Cart:
 
 		# making sure the cart is available on all pages of the site
 		self.cart = cart
+
+
+	def db_add(self, product, quantity):
+		product_id = str(product)
+		product_qty = str(quantity)
+
+		if product_id in self.cart:
+			pass
+		else:
+			self.cart[product_id] = int(product_qty)
+		self.session.modified = True
+
+		#saving logged in user stuff
+		if self.request.user.is_authenticated:
+			#get the curnt user
+			current_user = Profile.objects.filter(user__id=self.request.user.id)
+
+			#in the cart obj, converting string crts. "'" into " " "
+			#{'3':2, '5':1} into {"3":2, "5":1}
+			cart_str = str(self.cart)
+			cart_str = cart_str.replace("\'", "\"")
+
+			#save cart_str in the profiles' field
+			current_user.update(old_cart=cart_str)
+
+
 
 	def add(self, product, quantity):
 		product_id = str(product.id)
@@ -21,6 +50,19 @@ class Cart:
 		else:
 			self.cart[product_id] = int(product_qty)
 		self.session.modified = True
+
+		#saving logged in user stuff
+		if self.request.user.is_authenticated:
+			#get the curnt user
+			current_user = Profile.objects.filter(user__id=self.request.user.id)
+
+			#in the cart obj, converting string crts. "'" into " " "
+			#{'3':2, '5':1} into {"3":2, "5":1}
+			cart_str = str(self.cart)
+			cart_str = cart_str.replace("\'", "\"")
+
+			#save cart_str in the profiles' field
+			current_user.update(old_cart=cart_str)
 
 	def __len__(self):
 		return len(self.cart)
@@ -49,6 +91,19 @@ class Cart:
 
 		self.session.modified = True
 
+		#saving logged in user stuff
+		if self.request.user.is_authenticated:
+			#get the curnt user
+			current_user = Profile.objects.filter(user__id=self.request.user.id)
+
+			#in the cart obj, converting string crts. "'" into " " "
+			#{'3':2, '5':1} into {"3":2, "5":1}
+			cart_str = str(self.cart)
+			cart_str = cart_str.replace("\'", "\"")
+
+			#save cart_str in the profiles' field
+			current_user.update(old_cart=cart_str)
+
 		updated_cart_obj = self.cart
 		return updated_cart_obj
 
@@ -58,6 +113,20 @@ class Cart:
 			del self.cart[product_id]
 
 		self.session.modified = True
+
+		#saving logged in user stuff
+		if self.request.user.is_authenticated:
+			#get the curnt user
+			current_user = Profile.objects.filter(user__id=self.request.user.id)
+
+			#in the cart obj, converting string crts. "'" into " " "
+			#{'3':2, '5':1} into {"3":2, "5":1}
+			cart_str = str(self.cart)
+			cart_str = cart_str.replace("\'", "\"")
+
+			#save cart_str in the profiles' field
+			current_user.update(old_cart=cart_str)
+
 
 	def cart_total(self):
 		# get product ids from dict
