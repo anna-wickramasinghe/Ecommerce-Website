@@ -83,8 +83,19 @@ def update_password(request):
 		return redirect('home')
 
 def all_categories(request):
-	all_categories = Category.objects.all()
-	return render(request, 'all_categories.html', {'all_categories':all_categories})
+	all_categories = Category.objects.all().order_by('name')
+
+	categories_per_column = len(all_categories) // 4
+	extra_categories = len(all_categories) % 4
+    
+	columns = []
+	start = 0
+	for i in range(4):
+	    end = start + categories_per_column + (1 if i < extra_categories else 0)
+	    columns.append(all_categories[start:end])
+	    start = end
+
+	return render(request, 'all_categories.html', {'all_categories':all_categories, 'columns': columns})
 
 def home(request):
 	products = Product.objects.all()

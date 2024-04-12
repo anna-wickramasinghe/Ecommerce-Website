@@ -9,7 +9,7 @@
             <p class="lead fw-normal text-white-50 mb-0">View Your Cart...</p>
         </div>
     </div>
-</header>
+</header><br/>
 <div class="container">
     {% if cart_products %}
     {% for product in cart_products %}
@@ -23,7 +23,7 @@
                    <h4 class="card-title">{{ product.name }}</h4>
                     <h5 class="card-text">{{ product.sub_title }}</h5>
                     <p class="card-text">{{ product.description }}</p>
-                    <h6 class="card-text">
+                    <h6 class="card-text">Price:&nbsp;&nbsp;
                     {% if product.is_sale %}
                         {{ product.sale_price }} LKR
                     {% else %}
@@ -48,7 +48,8 @@
                               <option value="4">4</option>
                             </select>
                         </div>
-                    </div>
+                    </div><br><br>
+                    <a href="{% url 'home' %}" class="btn btn-secondary"> Home </a>
                     <button type="button" data-index="{{ product.id }}" class="btn btn-secondary update-cart">Update</button>
                     <button type="button" data-index="{{ product.id }}" class="btn btn-danger delete-product">Remove</button>
               </div>
@@ -56,7 +57,7 @@
           </div>
     </div>
     {% endfor %}
-    <div align="right">
+    <div align="right"><br>
         <h3>Total: {{ totals }} LKR</h3>
         <a href="{% url 'checkout' %}" class="btn btn-success">Checkout</a>
     </div>

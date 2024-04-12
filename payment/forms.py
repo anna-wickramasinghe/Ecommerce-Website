@@ -58,7 +58,7 @@ class PaymentForm(forms.Form):
 							widget=forms.TextInput(attrs={'class':'form-control','placeholder': 'Billing City'}),
 							required=True)
 	card_state = forms.CharField(label="",
-							widget=forms.TextInput(attrs={'class':'form-control','placeholder': 'Billing Address'}),
+							widget=forms.TextInput(attrs={'class':'form-control','placeholder': 'Billing State'}),
 							required=True)
 	card_zipcode = forms.CharField(label="",
 							widget=forms.TextInput(attrs={'class':'form-control','placeholder': 'Billing Zipcode'}),

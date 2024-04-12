@@ -6,21 +6,27 @@
         <div class="container px-4 px-lg-5 my-5">
             <div class="text-center text-white">
                 <h1 class="display-4 fw-bolder">Categories</h1>
-                <p class="lead fw-normal text-white-50 mb-0">Choose the ctegory you want...</p>
+                <p class="lead fw-normal text-white-50 mb-0">Choose the category you want...</p>
             </div>
         </div>
     </header>
-    <div class="container">
+    <br/><br/>
+        <div class="container">
         <div class="row">
-            <div class="col-8">
-                <ul>
-                    {% for category in all_categories %}
-                        <li><a href="{% url 'category' category %}">{{ category.name }}</a></li>
-                    {% endfor %}
-                </ul>
-            </div>
+            {% for column in columns %}
+                <div class="col-md-3">
+                    <div class="list-group">
+                        {% for category in column %}
+                            <a href="{% url 'category' category %}" class="list-group-item list-group-item-action">{{ category.name }}</a>
+                        {% endfor %}
+                    </div>
+                </div>
+
+            {% endfor %}
+
         </div>
-    </div>
+        <br/><br/>
+</div>
 
             
         

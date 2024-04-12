@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block content %}
- <header class="bg-dark py-5">
+<header class="bg-dark py-5">
     <div class="container px-4 px-lg-5 my-5">
         <div class="text-center text-white">
             <h1 class="display-4 fw-bolder">Billing</h1>
@@ -12,34 +12,36 @@
 </header>
 <div class="container">
     <div class="row">
-        <div class="col-md-6 offset-md-3">
+        <!-- Left column -->
+        <div class="col-md-6">
             <br><br>
             <div class="card">
-                  <div class="card-header">
+                <div class="card-header">
                     Order Summary
-                  </div>
-                  <div class="card-body">
+                </div>
+                <div class="card-body">
                     {% for product in cart_products %}
                         {{ product.name }}:
-                            {% if product.is_sale %}
-                                {{ product.sale_price }} LKR
-                            {% else %}
-                                {{ product.price }} LKR
-                            {% endif %}
+                        {% if product.is_sale %}
+                            {{ product.sale_price }} LKR
+                        {% else %}
+                            {{ product.price }} LKR
+                        {% endif %}
                         <br>
                         <small>Quantity:
-                        {% for key, value in quantities.items %} 
-                            {% if key == product.id|slugify %}
-                                {{ value }}
-                            {% endif %}
-                        {% endfor %}</small>
+                            {% for key, value in quantities.items %} 
+                                {% if key == product.id|slugify %}
+                                    {{ value }}
+                                {% endif %}
+                            {% endfor %}
+                        </small>
                         <br>
                     {% endfor %} 
                     <br>
                     <strong>Total: {{ totals }} LKR</strong>
                     <br><br>
                     <a href="{% url 'cart_summary' %}" class="btn btn-sm btn-outline-secondary">Update Items</a>
-                  </div>
+                </div>
             </div>
             <br>
             <div class="card">
@@ -58,24 +60,22 @@
                     <a href="{% url 'checkout' %}" class="btn btn-sm btn-outline-secondary">Update Shipping</a>
                 </div>
             </div>
-            <br>
+        </div>
+        <!-- Right column -->
+        <div class="col-md-6">
+            <br><br>
             <div class="card">
                 <div class="card-header">
                     Billing Info
                 </div>
                 <div class="card-body">
                     {{ billing_form.as_p }}
-
                 </div>
             </div>
-                <br>
-                <a href="#" class="btn btn-primary">Pay Now</a>
+            <br>
+            <a href="#" class="btn btn-primary">Pay Now</a>
             <br><br><br><br>
         </div>
     </div>
 </div>
-
 {% endblock %}
-
-
-

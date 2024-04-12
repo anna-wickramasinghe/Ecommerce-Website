@@ -6,20 +6,18 @@
         <div class="container px-4 px-lg-5 my-5">
             <div class="text-center text-white">
                 <h1 class="display-4 fw-bolder">Search Products...</h1>
-                <p class="lead fw-normal text-white-50 mb-0">Search the category or product you want</p>
+                <p class="lead fw-normal text-white-50 mb-0">We help you to search what you are looking for</p>
             </div>
         </div>
-    </header>
+    </header><br/>
     <div class="container">
         <div class="card text-center">
-            <div class="card-header">
-                Search Products
-            </div>
+            <br/>
             <div class="card-body">
                 <form method="POST" action="{% url 'search' %}">
                     {% csrf_token %}
                     <div class="mb-3">
-                        <input type="text" class="form-control" placeholder="Type here the item you are searching for...." name="searched">
+                        <input type="text" class="form-control" placeholder="Type any word associated your searching item...." name="searched">
                     </div>
                     <button type="submit" class="btn btn-secondary">Search</button>
                 </form>
