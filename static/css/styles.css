@@ -7260,6 +7260,11 @@ textarea.form-control-lg {
 .border-opacity-100 {
   --bs-border-opacity: 1;
 }
+.dark-mode{
+  background-color: #222; /* Dark mode background color */
+    color: #ff0000; /* Dark mode text color */
+
+}
 
 .w-25 {
   width: 25% !important;
