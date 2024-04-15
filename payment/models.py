@@ -31,7 +31,8 @@ def create_shipping(sender, instance, created, **kwargs):
 
 post_save.connect(create_shipping, sender=User)
 
-
+# We dont save the billing info(csrd details) on ethical and leagal reasons. 
+#So we don't have to create a model for billng info here.
 
 
 class Order(models.Model):

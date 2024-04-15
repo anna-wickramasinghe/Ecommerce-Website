@@ -9,12 +9,13 @@ def cart_summary(request):
 	cart_products = cart.get_cart_products
 	quantities = cart.get_quantities
 	totals = cart.cart_total()
+	quantity_range = range(1,11)
 	return render(request,
 				 "cart_summary.html",
 				  {'cart_products': cart_products,
 				  	'quantities': quantities,
-				  	'totals':totals
-
+				  	'totals':totals,
+				  	'quantity_range': quantity_range
 				  }
 				 )
 

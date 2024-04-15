@@ -42,11 +42,19 @@
                                 {% endfor %} 
 
                               </option>
-                              <option value="1">1</option>
-                              <option value="2">2</option>
-                              <option value="3">3</option>
-                              <option value="4">4</option>
+                              {% for i in quantity_range %}
+                                <option value="{{ i }}">{{ i }}</option>
+                              {% endfor %}
                             </select>
+
+                            <!--<input class="form-control" id="select{{ product.id }}" 
+                            type="number" min="1" max="10" 
+                            value="{% for key, value in quantities.items %}
+                            {% if key == product.id|slugify %}
+                            {{ value }}
+                            {% endif %}
+                            {% endfor %}">-->
+
                         </div>
                     </div><br><br>
                     <a href="{% url 'home' %}" class="btn btn-secondary"> Home </a>
