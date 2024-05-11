@@ -1,8 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import User
 from store.models import Product
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save, pre_save
 import datetime
+from django.dispatch import receiver
 
 class ShippingAddress(models.Model):
 	user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
@@ -31,7 +32,7 @@ def create_shipping(sender, instance, created, **kwargs):
 
 post_save.connect(create_shipping, sender=User)
 
-# We dont save the billing info(csrd details) on ethical and leagal reasons. 
+# We dont save the billing info(card details) on ethical and leagal reasons. 
 #So we don't have to create a model for billng info here.
 
 
@@ -41,11 +42,22 @@ class Order(models.Model):
 	email = models.EmailField(max_length=250, null=True)
 	shipping_address = models.TextField(max_length=15000, null=True)
 	amount_paid = models.DecimalField(max_digits=20, decimal_places=2, null=True)
-	date_ordered = models.DateField(default=datetime.datetime.today)
+	date_ordered = models.DateField(default=datetime.datetime.now())
 	shipped = models.BooleanField(default=False)
+	date_shipped = models.DateTimeField(blank=True, null=True)
 
 	def __str__(self):
 		return f'Order: {str(self.id)}'
+
+#auto add shipped date
+@receiver(pre_save, sender=Order)
+def set_shipped_date(sender, instance, **kwargs):
+	if instance.pk:
+		now = datetime.datetime.now()
+		obj = sender._default_manager.get(pk=instance.pk)
+		if instance.shipped and not obj.shipped:
+			instance.date_shipped = now
+
 
 
 class OrderItem(models.Model):
